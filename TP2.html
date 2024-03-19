@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>EXERCICE1</h3>
+    <input type="number" id="a"> +
+    <input type="number" id="b"> = <span id="resultat"></span>
+    <button onclick="addition()">calculer</button>
+
+    <h3>EXERCICE2</h3>
+    <input type="number" id="C">
+    <input type="number" id="D">
+    <button onclick="permuter()">permuter</button>
+
+    <h3>EXERCICE3</h3>
+    <div class="calculator">
+
+        <input type="number" id="input1" placeholder="Entrez le premier nombre">
+        <input type="number" id="input2" placeholder="Entrez le deuxième nombre">
+        <select id="operation">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+
+        <button onclick="calculer()">Calculer</button>
+        <span id="resultat2"></span>
+    </div>
+    <br>
+    <button onclick="testerVariables()">Tester les variables</button>
+    <br>
+    <br>
+    <h3>EXERCICE4</h3>
+    <label for="prixHT">Prix HT :</label>
+    <input type="number" id="prixHT">
+    <label for="tauxTVA">Taux de TVA en % :</label>
+    <input type="number" id="tauxTVA">
+    <button onclick="calculerPrixTTC()">Calculer le prix TTC</button>
+    <span id="prixTTC"></span>
+    <h4>EXERCICE4</h4>
+    <ul>
+            <li><label id="email_label"> email :</label></li>
+               <input  type="email" id="email"  > <br>
+           <li> <label id="obj_label"> objet :</label></li>
+               <input  type="text" id="obj"  > <br>
+           
+            <li><label id="corps_label"> corps :</label></li>
+            <textarea id="corps"></textarea> <br>
+    </ul>
+        <button class="button" onclick="envoyer()">envoyer</button>
+        <span id="resultat4"></span>
+
+
+    <br>
+    <a href="https://en.wikipedia.org/wiki/The_Story_of_an_Hour" onclick="return preventRedirection(event)">Lien avec redirection</a>
+
+
+    <div id="menuTrigger" class="menuTrigger" onclick="toggleMenu()">Cliquez ici pour afficher le menu</div>
+    <br><br><div id="menu">
+        <a>Option 1</a>
+        <a >Option 2</a>
+        <a >Option 3</a>
+    </div>
+    <script>
+        function preventRedirection(event) {
+            event.preventDefault();
+            alert("Redirection interdite");
+        }
+
+
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            if (menu.style.display === "none") {
+                menu.style.display = "block";
+            } else {
+                menu.style.display = "none";
+            }
+        }
+
+        function calculerPrixTTC() {
+            var prixHT = parseFloat(document.getElementById('prixHT').value);
+            var tauxTVA = parseFloat(document.getElementById('tauxTVA').value);
+
+            if (isNaN(prixHT) || prixHT <= 0) {
+                alert("Veuillez saisir un prix HT valide.");
+                return;
+            }
+
+            if (isNaN(tauxTVA) || tauxTVA <= 0) {
+                alert("Veuillez saisir un taux de TVA valide.");
+                return;
+            }
+
+            var prixTTC = prixHT * (1 + tauxTVA / 100);
+
+            document.getElementById('prixTTC').innerText = "Le prix TTC est de : " + prixTTC.toFixed(2) + " €";
+        }
+
+        function testerVariables() {
+
+            var input1 = parseFloat(prompt("Entrez la première valeur numérique :"));
+            var input2 = parseFloat(prompt("Entrez la deuxième valeur numérique :"));
+            var input3 = parseFloat(prompt("Entrez la troisième valeur numérique :"));
+
+
+            if (isNaN(input1) || isNaN(input2) || isNaN(input3)) {
+                alert("Veuillez saisir des valeurs numériques valides.");
+            } else {
+
+                if (input1 === input2 && input1 === input3) {
+                    alert("Les trois variables sont identiques.");
+                } else if (input1 === input2 || input1 === input3 || input2 === input3) {
+                    alert("Deux des variables sont de valeurs égales.");
+                } else {
+                    alert("Les trois variables sont différentes.");
+                }
+            }
+        }
+        function calculer(operation) {
+            var input1 = parseFloat(document.getElementById('input1').value);
+            var input2 = parseFloat(document.getElementById('input2').value);
+            var operation = document.getElementById('operation').value;
+            var resultatElement = document.getElementById('resultat2');
+
+            if (isNaN(input1) || isNaN(input2)) {
+                resultatElement.textContent = 'Veuillez saisir des nombres valides.';
+            } else {
+                var resultat;
+                switch (operation) {
+                    case '+':
+                        resultat = input1 + input2;
+                        break;
+                    case '-':
+                        resultat = input1 - input2;
+                        break;
+                    case '*':
+                        resultat = input1 * input2;
+                        break;
+                    case '/':
+                        if (input2 !== 0) {
+                            resultat = input1 / input2;
+                        } else {
+                            resultatElement.textContent = 'Division par zéro impossible.';
+                            return;
+                        }
+                        break;
+                    default:
+                        resultatElement.textContent = 'Opération non valide.';
+                        return;
+                }
+                resultatElement.textContent = 'Résultat : ' + resultat;
+            }
+        }
+
+        function permuter() {
+            var champC = document.getElementById('C');
+            var champD = document.getElementById('D');
+            var temp = champC.value;
+            champC.value = champD.value;
+            champD.value = temp;
+        }
+        function addition() {
+            var input1 = document.getElementById('a').value;
+            var input2 = document.getElementById('b').value;
+            var resultat = parseFloat(input1) + parseFloat(input2);
+            document.getElementById('resultat').textContent = resultat;
+        }
+        function envoyer() {
+            var email = document.getElementById("email").value;
+            var object = document.getElementById("obj").value;
+            var corps = document.getElementById("corps").value;
+
+
+            document.getElementById("resultat4").innerText = "Sender : " + email + ", Object : " + object + ", Corps : " + corps;
+        }
+
+    </script>
+</body>
+
+</html>
