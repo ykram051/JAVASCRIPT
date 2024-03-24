@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>EXERCICE 1</h1>
+    <form id="myForm">
+        <label for="Name">Name:</label>
+        <input id="name" type="text" required><br>
+        <label for="Prenom">Prenom:</label>
+        <input id="prenom" type="text" required><br>
+        <label for="Email">E-mail:</label>
+        <input id="email" type="text" required><br>
+        <label for="mdp">Mot de passe:</label>
+        <input id="mdp" type="text" required><br>
+        <label for="nmdp">Resaisir le mot de passe:</label>
+        <input id="nmdp" type="text" required><br>
+        <label for="tel">Telephone</label>
+        <input id="tel" type="text" required><br>
+        <label for="langue">Langue:</label>
+        <select id="langue" name="langue">
+            <option value="anglais">Anglais</option>
+            <option value="francais">Francais</option>
+            <option value="arabe">Arabic</option>
+        </select><br>
+        <label for="commentaire">Commentaire</label>
+        <input id="comm" type="text" required><br>
+        <button type="submit">Valider</button>
+        <button type="button" id="annuler">Annuler</button>
+        <div id="resultat"></div>
+    </form>
+    <h1>EXERCICE 2</h1>
+    <form id="form2">
+        <label for="">Dimension</label>
+        <input type="number" id="dim">
+        <label for="">valeur min</label>
+        <input type="number" id="min">
+        <label for="">valeur max </label>
+        <input type="number" name="" id="max">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="resultat2">
+
+    </div>
+
+    <h1>EXERCICE 3</h1>
+    <form id="form3">
+        <label for="code">Code étudiant:</label>
+        <input type="text" id="code" name="code"><br>
+
+        <label for="nom">Nom étudiant:</label>
+        <input type="text" id="nom3" name="nom3"><br>
+
+        <label for="prenom">Prénom étudiant:</label>
+        <input type="text" id="prenom3" name="prenom3"><br>
+
+        <label for="semestre">Semestre:</label>
+        <select id="semestre" name="semestre">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select><br>
+
+        <h2>Notes des modules du semestre</h2>
+        <label for="note1">Module 1:</label>
+        <input type="number" id="note1" name="note1"><br>
+
+        <label for="note2">Module 2:</label>
+        <input type="number" id="note2" name="note2"><br>
+
+        <label for="note3">Module 3:</label>
+        <input type="number" id="note3" name="note3"><br>
+
+        <label for="note4">Module 4:</label>
+        <input type="number" id="note4" name="note4"><br>
+
+        <label for="note5">Module 5:</label>
+        <input type="number" id="note5" name="note5"><br>
+
+        <label for="note6">Module 6:</label>
+        <input type="number" id="note6" name="note6"><br>
+
+        <button type="submit">Enregistrer</button>
+    </form>
+    <div id="resultat3">
+        <table id="tableContainer">
+            <thead>
+                <tr>
+                    <th>Code étudiant</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Semestre</th>
+                    <th>Module 1</th>
+                    <th>Module 2</th>
+                    <th>Module 3</th>
+                    <th>Module 4</th>
+                    <th>Module 5</th>
+                    <th>Module 6</th>
+                    <th>Moyenne</th>
+                    <th>Decision</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<script>
+    document.getElementById("myForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        afficher();
+    });
+
+    function afficher() {
+        if (document.getElementById("myForm").checkValidity()) {
+            let name = document.getElementById("name").value;
+            let prenom = document.getElementById("prenom").value;
+            let email = document.getElementById("email").value;
+            let mdp = document.getElementById("mdp").value;
+            let nmdp = document.getElementById("nmdp").value;
+            let tel = document.getElementById("tel").value;
+            let langue = document.getElementById("langue").value;
+            let comm = document.getElementById("comm").value;
+            let resultat = document.getElementById("resultat");
+            resultat.innerHTML = "Nom: " + name + "<br>" +
+                "Prénom: " + prenom + "<br>" +
+                "E-mail: " + email + "<br>" +
+                "Mot de passe: " + mdp + "<br>" +
+                "Resaisir le mot de passe: " + nmdp + "<br>" +
+                "Téléphone: " + tel + "<br>" +
+                "Langue: " + langue + "<br>" +
+                "Commentaire: " + comm;
+        }
+    }
+
+    document.getElementById("annuler").addEventListener('click', function () {
+        document.getElementById("myForm").reset();
+        document.getElementById("resultat").innerHTML = "";
+    });
+
+
+    document.getElementById("form2").addEventListener("submit", function (event) {
+        event.preventDefault();
+        create();
+    });
+
+    function create() {
+        let dim = document.getElementById("dim").value;
+        let min = document.getElementById("min").value;
+        let max = document.getElementById("max").value;
+        let resultat2 = document.getElementById("resultat2");
+        if (dim === "" || min === "" || max === "" || isNaN(dim) || isNaN(min) || isNaN(max)) {
+            alert("Please enter valid integer values for Dimension, Min, and Max.");
+            return;
+        }
+        if (max < min) {
+            alert("the min should be less than the max");
+            return;
+        }
+        let tableHTML = "<table border='1px solid black'>";
+        tableHTML += "<tr>";
+        for (let i = 0; i < dim; i++) {
+            if (i % 10 == 0 && i != 0) {
+                tableHTML += "</tr><tr>";
+            }
+            tableHTML += "<td>" + Math.floor(Math.random() * (max - min + 1) + min) + "</td>";
+        }
+
+        tableHTML += "</tr>";
+        tableHTML += "</table>";
+
+        resultat2.innerHTML = tableHTML;
+    }
+
+    document.getElementById("form3").addEventListener("submit", function (event) {
+        event.preventDefault();
+        calculate();
+    })
+
+    function calculate() {
+        let code = document.getElementById("code").value.trim();
+        let nom3 = document.getElementById("nom3").value.trim();
+        let prenom3 = document.getElementById("prenom3").value.trim();
+        let semestre = document.getElementById("semestre").value;
+        let note1 = parseInt(document.getElementById("note1").value.trim());
+        let note2 = parseInt(document.getElementById("note2").value.trim());
+        let note3 = parseInt(document.getElementById("note3").value.trim());
+        let note4 = parseInt(document.getElementById("note4").value.trim());
+        let note5 = parseInt(document.getElementById("note5").value.trim());
+        let note6 = parseInt(document.getElementById("note6").value.trim());
+
+        if (code === "" || nom3 === "" || prenom3 === "" || note1 === "" || note2 === "" || note3 === "" || note4 === "" || note5 === "" || note6 === "") {
+            alert("Veuillez remplir tous les champs du formulaire.");
+            return;
+        }
+        let modules = [note1, note2, note3, note4, note5, note6];
+        let modulesnotPassed = 0;
+
+        let totalGrade = modules.reduce((sum, grade) => {
+            if (grade <= 12) {
+                modulesnotPassed++;}
+            return sum + grade;
+        }, 0);
+        let moyenne = totalGrade / modules.length;
+        let hasFailingGrade = modules.some(module => module < 8);
+        let nonValidatedModules = modules.filter(module => module < 12 && module >= 8).length;
+        let decision = (moyenne >= 12  && !hasFailingGrade && nonValidatedModules <= 3 ) ? "Validé" : "Non Validé";
+        
+        
+        let newRow = document.createElement("tr");
+        newRow.innerHTML = `
+                <tr>
+                    <td>${code}</td>
+                    <td>${nom3}</td>
+                    <td>${prenom3}</td>
+                    <td>${semestre}</td>
+                    <td>${note1}</td>
+                    <td>${note2}</td>
+                    <td>${note3}</td>
+                    <td>${note4}</td>
+                    <td>${note5}</td>
+                    <td>${note6}</td>
+                    <td>${moyenne.toFixed(2)}</td>
+                    <td>${decision}</td>
+                </tr>
+            `;
+
+        document.getElementById("studentTableBody").appendChild(newRow);
+        document.getElementById("form3").reset();
+    }
+</script>
+
+
+</html>
